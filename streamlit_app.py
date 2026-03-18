@@ -1,174 +1,140 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-from datetime import datetime
 
 # 페이지 설정
-st.set_page_config(page_title="Streamlit 요소 데모", layout="wide")
+st.set_page_config(page_title="자기소개", layout="centered")
 
-# 제목
-st.title("🎈 Streamlit 기본 요소 데모")
-st.write("이 페이지는 Streamlit이 제공하는 다양한 UI 요소들을 보여줍니다.")
+# 프로필 섹션
+st.markdown("""
+<style>
+    .profile-header {
+        text-align: center;
+        padding: 20px 0;
+    }
+    .profile-name {
+        font-size: 3em;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+    .profile-title {
+        font-size: 1.5em;
+        color: #1f77b4;
+        margin: 5px 0;
+    }
+</style>
+""", unsafe_allow_html=True)
 
-# ==================== 텍스트 요소 ====================
-st.header("📝 텍스트 요소")
-
-st.subheader("제목과 텍스트")
-st.text("이것은 일반 텍스트입니다.")
-st.markdown("**Bold** 텍스트와 _Italic_ 텍스트를 지원합니다.")
-st.code("print('코드 블록도 표시할 수 있습니다')", language="python")
-
-# ==================== 입력 요소 ====================
-st.header("🎮 입력 요소 (Input Widgets)")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.subheader("텍스트 입력")
-    name = st.text_input("이름을 입력하세요:", value="홍길동")
-    st.write(f"입력하신 이름: {name}")
-    
-    email = st.text_area("메시지를 입력하세요:", height=100)
-    if email:
-        st.success(f"메시지 입력됨: {len(email)}자")
+col1, col2, col3 = st.columns([1, 2, 1])
 
 with col2:
-    st.subheader("선택 요소")
-    option = st.selectbox("옵션 선택:", ["옵션 1", "옵션 2", "옵션 3", "옵션 4"])
-    st.write(f"선택된 옵션: {option}")
-    
-    multi = st.multiselect("여러 개 선택:", ["사과", "바나나", "딸기", "포도"], default=["사과"])
-    st.write(f"선택된 항목: {', '.join(multi)}")
+    st.markdown("""
+    <div class="profile-header">
+        <div style="font-size: 80px; margin: 20px 0;">👤</div>
+        <div class="profile-name">김다은</div>
+        <div class="profile-title">인천대 수학교육과</div>
+        <p style="color: gray; font-size: 1.1em;">📍 경기도 시흥시 거주</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 st.divider()
 
-col3, col4 = st.columns(2)
+# 소개 섹션
+st.header("🎯 소개")
+st.write("""
+안녕하세요 수학교육과 2학년 김다은입니다
+""")
 
-with col3:
-    st.subheader("숫자 입력")
-    age = st.slider("나이를 선택하세요:", 0, 100, 25)
-    st.write(f"선택된 나이: {age}세")
+st.divider()
+
+# 경력 섹션
+st.header("💼 경력")
+with st.expander("회사명 1 - 직책 (2020.01 ~ 2024.12)"):
+    st.write("""
+    **주요 업무:**
+    - 업무 내용 1
+    - 업무 내용 2
+    - 업무 내용 3
+    """)
+
+with st.expander("회사명 2 - 직책 (2019.01 ~ 2019.12)"):
+    st.write("""
+    **주요 업무:**
+    - 업무 내용 1
+    - 업무 내용 2
+    """)
+
+st.divider()
+
+# 기술/스킬 섹션
+st.header("🛠️ 기술 & 스킬")
+
+col_a, col_b = st.columns(2)
+
+with col_a:
+    st.subheader("프로그래밍 언어")
+    st.write("• Python")
+    st.write("• JavaScript")
+    st.write("• SQL")
+
+with col_b:
+    st.subheader("주요 기술")
+    st.write("• Streamlit")
+    st.write("• Django")
+    st.write("• REST API")
+
+st.divider()
+
+# 학력 섹션
+st.header("🎓 학력")
+st.write("""
+**인천대학교** - 수학교육과  
+*재학중*
+""")
+
+st.divider()
+
+# 프로젝트 섹션
+st.header("🚀 프로젝트")
+
+col_p1, col_p2 = st.columns(2)
+
+with col_p1:
+    st.subheader("프로젝트 1")
+    st.write("""
+    **설명:** 프로젝트에 대한 간단한 설명
     
-    number = st.number_input("숫자를 입력하세요:", value=10, step=1)
-    st.write(f"입력된 숫자: {number}")
+    **기술:** Python, Streamlit
+    """)
 
-with col4:
-    st.subheader("선택 요소")
-    agree = st.checkbox("약관에 동의합니다")
-    st.write(f"동의 여부: {'✅ 동의' if agree else '❌ 미동의'}")
+with col_p2:
+    st.subheader("프로젝트 2")
+    st.write("""
+    **설명:** 프로젝트에 대한 간단한 설명
     
-    choice = st.radio("좋아하는 색상:", ["🔴 빨강", "🟢 초록", "🔵 파랑"])
-    st.write(f"선택: {choice}")
+    **기술:** JavaScript, React
+    """)
 
-# ==================== 버튼 ====================
-st.header("🔘 버튼")
+st.divider()
 
-col5, col6, col7 = st.columns(3)
+# 연락처 섹션
+st.header("📞 연락처")
 
-with col5:
-    if st.button("일반 버튼"):
-        st.balloons()
-        st.success("버튼이 클릭되었습니다!")
+col_email, col_phone, col_link = st.columns(3)
 
-with col6:
-    if st.button("⭐ 특별한 버튼", key="special"):
-        st.info("특별한 버튼이 클릭되었습니다!")
+with col_email:
+    st.info("📧\nemail@example.com")
 
-with col7:
-    if st.download_button("📥 파일 다운로드", data="안녕하세요!", file_name="example.txt"):
-        st.success("다운로드되었습니다!")
+with col_phone:
+    st.info("📱\n010-XXXX-XXXX")
 
-# ==================== 데이터 표시 ====================
-st.header("📊 데이터 표시")
+with col_link:
+    st.info("🔗\nlinkedin.com/in/yourprofile")
 
-st.subheader("데이터프레임")
-df = pd.DataFrame({
-    "이름": ["Alice", "Bob", "Charlie", "Diana"],
-    "나이": [25, 30, 35, 28],
-    "도시": ["서울", "부산", "대구", "인천"]
-})
-st.dataframe(df, use_container_width=True)
+st.divider()
 
-st.subheader("테이블 (수정 불가)")
-st.table(df)
-
-st.subheader("JSON 데이터")
-st.json({"이름": "홍길동", "나이": 30, "취미": ["독서", "영화", "게임"]})
-
-# ==================== 차트 ====================
-st.header("📈 차트")
-
-chart_data = pd.DataFrame({
-    "Month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-    "Sales": [100, 150, 120, 200, 180, 250]
-})
-
-col8, col9 = st.columns(2)
-
-with col8:
-    st.subheader("라인 차트")
-    st.line_chart(chart_data.set_index("Month")["Sales"])
-
-with col9:
-    st.subheader("바 차트")
-    st.bar_chart(chart_data.set_index("Month")["Sales"])
-
-st.subheader("에어리어 차트")
-st.area_chart(chart_data.set_index("Month"))
-
-# ==================== 메시지와 알림 ====================
-st.header("💬 메시지와 알림")
-
-col10, col11, col12, col13 = st.columns(4)
-
-with col10:
-    st.success("✅ 성공 메시지")
-
-with col11:
-    st.info("ℹ️ 정보 메시지")
-
-with col12:
-    st.warning("⚠️ 경고 메시지")
-
-with col13:
-    st.error("❌ 에러 메시지")
-
-# ==================== 진행 표시 ====================
-st.header("⏳ 진행 표시")
-
-progress = st.slider("진행 상황:", 0, 100, 50)
-st.progress(progress / 100)
-
-# ==================== 확장/축소 영역 ====================
-st.header("📂 확장/축소 영역 (Expander)")
-
-with st.expander("클릭해서 더보기"):
-    st.write("숨겨진 내용입니다!")
-    st.image("https://via.placeholder.com/300", caption="샘플 이미지")
-
-# ==================== 사이드바 ====================
-st.sidebar.header("⚙️ 설정")
-theme = st.sidebar.radio("테마 선택:", ["일반", "어두운 모드", "밝은 모드"])
-st.sidebar.write(f"선택된 테마: {theme}")
-
-sidebar_text = st.sidebar.text_input("사이드바 입력:")
-if sidebar_text:
-    st.sidebar.write(f"입력하신 텍스트: {sidebar_text}")
-
-# ==================== 세션 상태 ====================
-st.header("💾 세션 상태 (Session State)")
-
-if "count" not in st.session_state:
-    st.session_state.count = 0
-
-col14, col15 = st.columns(2)
-
-with col14:
-    if st.button("+1 증가"):
-        st.session_state.count += 1
-
-with col15:
-    if st.button("-1 감소"):
-        st.session_state.count -= 1
-
-st.write(f"현재 카운트: {st.session_state.count}")
+# 푸터
+st.markdown("""
+---
+<div style="text-align: center; color: gray; padding: 20px 0;">
+    © 2026 당신의 이름. All rights reserved.
+</div>
+""", unsafe_allow_html=True)
