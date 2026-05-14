@@ -131,6 +131,16 @@ with col_link:
 
 st.divider()
 
+# 관심사 섹션
+st.header("🎨 관심사")
+st.write("""
+- 수학 교육 혁신
+- 프로그래밍을 통한 문제 해결
+- 독서와 여행
+""")
+
+st.divider()
+
 # 푸터
 st.markdown("""
 ---
